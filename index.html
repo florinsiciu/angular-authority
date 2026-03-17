@@ -16,10 +16,30 @@
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <!-- Calendly CSS -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></noscript>
+  <!-- Calendly CSS (loaded async — only needed on interaction) -->
+  <link rel="preload" as="style" href="https://assets.calendly.com/assets/external/widget.css" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"></noscript>
   <style>
+    /* Font metric overrides — match fallback to web font to prevent CLS */
+    @font-face {
+      font-family: 'DM Sans Fallback';
+      src: local('Arial');
+      size-adjust: 104.83%;
+      ascent-override: 99.21%;
+      descent-override: 31.2%;
+      line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'IBM Plex Sans Fallback';
+      src: local('Arial');
+      size-adjust: 99.94%;
+      ascent-override: 101.03%;
+      descent-override: 27.18%;
+      line-gap-override: 0%;
+    }
+
     /* ========================================
        RESET & BASE
        ======================================== */
@@ -52,8 +72,8 @@
       --red: #FBBF24;
       --cta-bg: #DD0031;
       --cta-text: #ffffff;
-      --font-heading: 'DM Sans', sans-serif;
-      --font-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+      --font-heading: 'DM Sans', 'DM Sans Fallback', sans-serif;
+      --font-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback', 'Segoe UI', sans-serif;
     }
 
     html {
@@ -231,6 +251,7 @@
       padding: 0.6rem 1.5rem;
       background: var(--cta-bg);
       border: 1px solid var(--cta-bg);
+      border-radius: 8px;
       color: var(--cta-text) !important;
       font-size: 0.8rem !important;
       font-weight: 600 !important;
@@ -365,6 +386,7 @@
       gap: 0.75rem;
       padding: 1rem 2.5rem;
       background: var(--cta-bg);
+      border-radius: 8px;
       color: var(--cta-text);
       text-decoration: none;
       font-weight: 700;
@@ -400,6 +422,7 @@
       letter-spacing: 0.06em;
       color: var(--gold);
       border: 1px solid var(--gold-dim);
+      border-radius: 100px;
       padding: 0.4rem 1rem;
       margin-top: 1.25rem;
       margin-left: 0.5rem;
@@ -424,6 +447,7 @@
       flex: 1;
       background: var(--dark-2);
       border: 1px solid var(--gray-800);
+      border-radius: 8px;
       padding: 1.25rem;
       position: relative;
       overflow: hidden;
@@ -462,6 +486,7 @@
 
     .code-after {
       animation: pulse-glow 4s ease-in-out infinite;
+      will-change: box-shadow;
     }
 
     .code-label {
@@ -679,6 +704,7 @@
       text-align: center;
       padding: 3rem 2rem;
       border: 1px solid var(--gold-dim);
+      border-radius: 8px;
       background: var(--gold-glow);
     }
 
@@ -752,6 +778,7 @@
       font-weight: 700;
       color: var(--cta-bg);
       border: 2px solid var(--gold);
+      border-radius: 50%;
       background: var(--black);
       margin-bottom: 1.5rem;
       position: relative;
@@ -829,6 +856,7 @@
     .service-card {
       background: var(--dark-2);
       border: 1px solid var(--gray-800);
+      border-radius: 8px;
       padding: 2.5rem;
       position: relative;
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -845,6 +873,7 @@
       right: 0;
       height: 2px;
       background: var(--gold);
+      border-radius: 8px 8px 0 0;
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1072,6 +1101,7 @@
       text-transform: uppercase;
       color: var(--blue);
       border: 1px solid var(--blue-dim);
+      border-radius: 8px;
       padding: 0.4rem 1rem;
       transition: all 0.3s ease;
     }
@@ -1115,6 +1145,7 @@
     .why-item {
       padding: 2.5rem;
       border: 1px solid var(--gray-800);
+      border-radius: 8px;
       border-left: 3px solid var(--gold);
       background: rgba(28, 28, 36, 0.5);
       transition: all 0.4s ease;
@@ -1210,6 +1241,7 @@
       font-size: 0.7rem;
       padding: 0.15rem 0.5rem;
       border: 1px solid var(--blue-dim);
+      border-radius: 4px;
       color: var(--blue);
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -1243,6 +1275,8 @@
 
     .faq-item {
       border-bottom: 1px solid var(--gray-800);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .faq-item:first-child {
@@ -1357,56 +1391,134 @@
       margin-bottom: 2.5rem;
     }
 
-    /* Guarantee Enhanced (Phase 8) */
-    .guarantee-enhanced {
+    /* Booking Card */
+    .booking-card {
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      background: linear-gradient(165deg, var(--dark-3) 0%, var(--dark) 100%);
+      border: 1px solid rgba(221, 0, 49, 0.2);
+      border-radius: 16px;
+      padding: 0;
+      text-align: center;
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25), 0 0 80px rgba(221, 0, 49, 0.04);
+      overflow: hidden;
+    }
+
+    .booking-card-guarantee {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      padding: 1.5rem 2rem;
-      border: 1px solid var(--gold-dim);
-      background: var(--gold-glow);
-      margin-bottom: 3rem;
-      max-width: 600px;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: rgba(221, 0, 49, 0.06);
+      border-bottom: 1px solid rgba(221, 0, 49, 0.12);
+    }
+
+    .booking-card-guarantee svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      fill: var(--gold);
+    }
+
+    .booking-card-guarantee span {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .booking-card-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .booking-card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin-bottom: 2rem;
+      text-align: left;
+      max-width: 320px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .guarantee-enhanced svg {
+    .booking-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--gray-300);
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+    }
+
+    .booking-feature-icon {
       flex-shrink: 0;
-      width: 32px;
-      height: 32px;
-      fill: var(--gold);
-    }
-
-    .guarantee-enhanced p {
-      font-size: 1rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(221, 0, 49, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
       color: var(--gold);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      text-align: left;
     }
 
-    .calendly-embed-wrapper {
-      margin: 2rem auto;
-      max-width: 680px;
+    .booking-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-heading);
     }
 
-    .contact-email-fallback {
-      display: block;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--gray-500);
+    .booking-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(221, 0, 49, 0.35);
     }
 
-    .contact-email-fallback a {
-      color: var(--blue);
+    .booking-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--gray-700);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .booking-divider::before,
+    .booking-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-800);
+    }
+
+    .booking-email-fallback {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+
+    .booking-email-fallback a {
+      color: var(--gray-400);
       text-decoration: none;
       transition: color 0.3s ease;
+      border-bottom: 1px solid var(--gray-800);
+      padding-bottom: 1px;
     }
 
-    .contact-email-fallback a:hover {
+    .booking-email-fallback a:hover {
       color: var(--gold);
+      border-bottom-color: var(--gold);
     }
 
     /* Next Steps (Phase 8) */
@@ -1436,6 +1548,7 @@
       font-weight: 700;
       color: var(--gold);
       border: 1px solid var(--gold-dim);
+      border-radius: 50%;
       flex-shrink: 0;
     }
 
@@ -1515,6 +1628,7 @@
       width: 100%;
       height: 40px;
       background: var(--cta-bg);
+      border-radius: 8px;
       color: var(--cta-text);
       text-decoration: none;
       font-weight: 700;
@@ -1761,14 +1875,6 @@
         padding: 1.75rem;
       }
 
-      .guarantee-enhanced {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .guarantee-enhanced p {
-        text-align: center;
-      }
     }
 
     /* ========================================
@@ -1799,6 +1905,7 @@
 </head>
 <body>
 
+  <main>
   <!-- ==================== NAVIGATION ==================== -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="container nav-inner">
@@ -1807,7 +1914,7 @@
         <li><a href="#services">Services</a></li>
         <li><a href="#track-record">Track Record</a></li>
         <li><a href="#why">Why Me</a></li>
-        <li><a href="#contact" class="nav-cta">Book a Review</a></li>
+        <li><a href="#contact" class="nav-cta" onclick="openCalendly(); return false;">Book a Review</a></li>
       </ul>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <span></span>
@@ -2247,25 +2354,36 @@
           and show you exactly what needs to change &mdash; no obligation.
         </p>
 
-        <!-- Guarantee Enhanced (moved above CTA) -->
-        <div class="guarantee-enhanced fade-in fade-in-delay-2">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-          <p>Fixed price. Documented process. If you're not happy, you don't pay.</p>
+        <!-- Booking Card -->
+        <div class="booking-card fade-in fade-in-delay-2">
+          <div class="booking-card-guarantee">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <span>Fixed price. No obligation. Satisfaction guaranteed.</span>
+          </div>
+          <div class="booking-card-body">
+            <div class="booking-card-features">
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                30-minute architecture deep-dive
+              </div>
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                Actionable written summary
+              </div>
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                No obligation to continue
+              </div>
+            </div>
+            <button class="btn-primary booking-cta" onclick="openCalendly()" type="button">
+              Pick a Time
+            </button>
+            <div class="booking-divider">or</div>
+            <p class="booking-email-fallback">
+              Email <a href="mailto:contact@florinsiciu.com">contact@florinsiciu.com</a>
+            </p>
+          </div>
         </div>
-
-        <!-- Scarcity / urgency nudge (honest — capped at 3/week in Calendly) -->
-        <p class="fade-in fade-in-delay-2" style="text-align:center; font-size:0.95rem; color:var(--text-secondary, #94a3b8); margin-bottom:0.5rem; letter-spacing:0.01em;">
-          I keep a limited number of review slots open each week. Book yours below.
-        </p>
-
-        <!-- Calendly Embed -->
-        <div class="calendly-embed-wrapper fade-in fade-in-delay-3">
-          <div id="calendly-embed" style="min-width: 320px; height: 630px;"></div>
-        </div>
-
-        <p class="contact-email-fallback fade-in fade-in-delay-3">
-          Prefer email? <a href="mailto:contact@florinsiciu.com">contact@florinsiciu.com</a>
-        </p>
 
         <!-- What happens next -->
         <div class="next-steps fade-in fade-in-delay-4">
@@ -2298,9 +2416,11 @@
     </div>
   </footer>
 
+  </main>
+
   <!-- ==================== STICKY MOBILE CTA (Phase 7) ==================== -->
   <div class="sticky-cta" id="sticky-cta" aria-label="Book a review">
-    <a href="#contact">Book Free Review</a>
+    <a href="#contact" onclick="openCalendly(); return false;">Book Free Review</a>
   </div>
 
   <!-- Calendly JS -->
@@ -2578,32 +2698,23 @@
         typewriterObserver.observe(codeAfterBlock);
       }
 
-      // --- Calendly init (Phase 8) ---
-      function initCalendly() {
-        if (typeof Calendly !== 'undefined') {
-          Calendly.initInlineWidget({
-            url: 'https://calendly.com/florinsiciu/30min?utm_source=landing_page&utm_medium=web&utm_campaign=angular_authority',
-            parentElement: document.getElementById('calendly-embed'),
-            prefill: {},
-            utm: {
-              utmSource: 'landing_page',
-              utmMedium: 'web',
-              utmCampaign: 'angular_authority'
-            }
-          });
-        }
-      }
+    })();
 
-      // Try init after script loads
+    // --- Calendly popup (outside IIFE so onclick can access it) ---
+    function openCalendly() {
       if (typeof Calendly !== 'undefined') {
-        initCalendly();
-      } else {
-        window.addEventListener('load', function() {
-          setTimeout(initCalendly, 1000);
+        Calendly.initPopupWidget({
+          url: 'https://calendly.com/florinsiciu/30min?utm_source=landing_page&utm_medium=web&utm_campaign=angular_authority',
+          utm: {
+            utmSource: 'landing_page',
+            utmMedium: 'web',
+            utmCampaign: 'angular_authority'
+          }
         });
       }
+      return false;
+    }
 
-    })();
   </script>
 </body>
 </html>
